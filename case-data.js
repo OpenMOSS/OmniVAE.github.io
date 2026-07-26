@@ -31,7 +31,12 @@ document.querySelectorAll(".case-card[data-case]").forEach((card) => {
 
   const table = card.querySelector(".case-table");
   const rows = caseMetricGroups.map(([group, metrics]) => {
-    const metricRows = metrics.map(([key, label]) => `
+    const availableMetrics = metrics.filter(([key]) =>
+      caseConfigurations.some(({ key: config }) => Number.isFinite(values[config][key]))
+    );
+    if (availableMetrics.length === 0) return "";
+
+    const metricRows = availableMetrics.map(([key, label]) => `
       <tr>
         <td>${label}</td>
         ${caseConfigurations.map(({ key: config }) => `<td>${formatMetric(values[config][key])}</td>`).join("")}
@@ -47,6 +52,6 @@ document.querySelectorAll(".case-card[data-case]").forEach((card) => {
 
   const note = document.createElement("p");
   note.className = "case-metric-note";
-  note.textContent = "All available per-sample metrics from the final 200k, CFG = 5 evaluation. — denotes a metric that is unavailable or not applicable to this sample.";
+  note.textContent = "Available per-sample metrics from the final 200k, CFG = 5 evaluation. A row is omitted when the metric is unavailable for all four configurations; — denotes a missing value within an otherwise available row.";
   table.insertAdjacentElement("afterend", note);
 });
