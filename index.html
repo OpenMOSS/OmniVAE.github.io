@@ -19,43 +19,57 @@
   </head>
   <body>
     <header class="site-header" aria-label="Primary navigation">
-      <a class="brand" href="#top">OmniVAE</a>
-      <nav>
-        <a href="#method">Method</a>
-        <a href="#examples">Examples</a>
-        <a href="#cases">Cases</a>
-        <a href="#results">Results</a>
-        <a href="#resources">Resources</a>
-      </nav>
+      <div class="nav-container">
+        <a class="brand" href="#top">OmniVAE</a>
+        <nav>
+          <a href="#abstract">Abstract</a>
+          <a href="#method">Method</a>
+          <a href="#examples">Demos</a>
+          <a href="#cases">Comparisons</a>
+          <a href="#results">Results</a>
+          <a href="#resources">Resources</a>
+        </nav>
+      </div>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-media" aria-hidden="true">
-          <video autoplay muted loop playsinline poster="assets/videos/speech-stage.jpg">
-            <source src="assets/videos/speech-stage.mp4" type="video/mp4" />
-          </video>
-          <video autoplay muted loop playsinline poster="assets/videos/talk-closeup.jpg">
-            <source src="assets/videos/talk-closeup.mp4" type="video/mp4" />
-          </video>
-          <video autoplay muted loop playsinline poster="assets/videos/lecture-closeup.jpg">
-            <source src="assets/videos/lecture-closeup.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <div class="hero-shade"></div>
-        <div class="hero-copy">
-          <p class="eyebrow">Cross-modal tokenizer for audio-video generation</p>
-          <h1 id="hero-title">OmniVAE</h1>
-          <p class="subtitle">
-            A joint audio-video VAE that keeps separate audio and video codecs,
-            while aligning their latent spaces through segment-level contrastive
-            learning and semantic distillation.
-          </p>
-          <div class="actions" aria-label="Project links">
-            <a class="button primary" href="https://github.com/JunZhan2000/OmniVAE">Code</a>
-            <a class="button" href="https://huggingface.co/zhanjun/OmniVAE">Models</a>
-            <a class="button" href="#" aria-disabled="true">arXiv</a>
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Research Project</p>
+            <h1 id="hero-title">
+              <span>OmniVAE</span>: Cross-Modal Aligned VAE for Joint
+              Audio-Video Generation
+            </h1>
+            <p class="subtitle">
+              A joint audio-video VAE that keeps separate audio and video codecs,
+              while aligning their latent spaces through segment-level contrastive
+              learning and semantic distillation.
+            </p>
+            <div class="actions" aria-label="Project links">
+              <a class="button primary" href="https://github.com/OpenMOSS/OmniVAE">Code</a>
+              <a class="button" href="https://huggingface.co/OpenMOSS-Team/OmniVAE">Models</a>
+              <span class="button disabled" aria-disabled="true">Paper coming soon</span>
+            </div>
           </div>
+
+          <figure class="teaser">
+            <div class="teaser-grid">
+              <video autoplay muted loop playsinline poster="assets/videos/speech-stage.jpg">
+                <source src="assets/videos/speech-stage.mp4" type="video/mp4" />
+              </video>
+              <video autoplay muted loop playsinline poster="assets/videos/talk-closeup.jpg">
+                <source src="assets/videos/talk-closeup.mp4" type="video/mp4" />
+              </video>
+              <video autoplay muted loop playsinline poster="assets/videos/lecture-closeup.jpg">
+                <source src="assets/videos/lecture-closeup.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <figcaption>
+              Jointly generated video and audio examples. Use the detailed demos
+              below to play them with sound.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -77,6 +91,34 @@
             <span class="metric">0</span>
             <p>extra inference overhead from the alignment and distillation heads.</p>
           </article>
+        </div>
+      </section>
+
+      <section id="abstract" class="section abstract-section">
+        <div class="container narrow">
+          <div class="section-heading centered">
+            <p class="section-label">Abstract</p>
+            <h2>
+              Learning aligned audio-video latents while preserving independent
+              codecs.
+            </h2>
+          </div>
+          <div class="abstract-copy">
+            <p>
+              OmniVAE is a cross-modal tokenizer for joint audio-video generation.
+              It retains mature modality-specific VAE architectures—a 3D causal
+              video VAE and a continuous waveform audio VAE—while learning
+              temporally and semantically aligned latent representations from
+              paired clips.
+            </p>
+            <p>
+              Segment-level bidirectional contrastive learning captures temporal
+              correspondence between modalities, and semantic distillation from
+              frozen multimodal encoders improves latent learnability. Both
+              auxiliary components are used only during training, leaving the
+              original VAE interfaces and inference cost unchanged.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -637,18 +679,18 @@
             </p>
           </div>
           <div class="resource-list">
-            <a href="https://github.com/JunZhan2000/OmniVAE">
+            <a href="https://github.com/OpenMOSS/OmniVAE">
               <span>GitHub</span>
-              <strong>JunZhan2000/OmniVAE</strong>
+              <strong>OpenMOSS/OmniVAE</strong>
             </a>
-            <a href="https://huggingface.co/zhanjun/OmniVAE">
+            <a href="https://huggingface.co/OpenMOSS-Team/OmniVAE">
               <span>Hugging Face</span>
-              <strong>zhanjun/OmniVAE</strong>
+              <strong>OpenMOSS-Team/OmniVAE</strong>
             </a>
-            <a href="#" aria-disabled="true">
+            <div class="resource-disabled" aria-disabled="true">
               <span>Paper</span>
               <strong>arXiv coming soon</strong>
-            </a>
+            </div>
           </div>
         </div>
       </section>
@@ -664,7 +706,7 @@
   author  = {Zhan, Jun and Contributors},
   journal = {arXiv preprint arXiv:XXXX.XXXXX},
   year    = {2026},
-  url     = {https://github.com/JunZhan2000/OmniVAE}
+  url     = {https://github.com/OpenMOSS/OmniVAE}
 }</code></pre>
         </div>
       </section>
@@ -676,5 +718,13 @@
         <span>Apache-2.0 licensed code release.</span>
       </div>
     </footer>
+    <script>
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.querySelectorAll("video[autoplay]").forEach((video) => {
+          video.autoplay = false;
+          video.pause();
+        });
+      }
+    </script>
   </body>
 </html>
