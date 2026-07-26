@@ -435,8 +435,9 @@
               The examples below are selected from Set1, Set2, and Set3-medium;
               each row compares the same prompt generated with the
               reconstruction-only VAE and with the full OmniVAE configuration
-              (Recon + Distill + AVCLIP). Unless marked with ↓, higher metric
-              values are better.
+              (Recon + Distill + AVCLIP). DeSync measures the absolute
+              audio-video temporal offset in seconds and is lower is better.
+              Unless marked with ↓, higher metric values are better.
             </p>
           </div>
 
@@ -468,10 +469,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.10</td><td>2.00</td><td>+1.90</td></tr>
+                    <tr><td>DeSync ↓</td><td>1.90</td><td>0.00</td><td>1.90 lower</td></tr>
                     <tr><td>Video AS ↑</td><td>0.490</td><td>0.525</td><td>+0.035</td></tr>
                     <tr><td>DNSMOS ↑</td><td>3.60</td><td>3.91</td><td>+0.31</td></tr>
                     <tr><td>Speech WER ↓</td><td>0.150</td><td>0.100</td><td>0.050 lower</td></tr>
@@ -503,10 +504,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.20</td><td>2.00</td><td>+1.80</td></tr>
+                    <tr><td>DeSync ↓</td><td>1.80</td><td>0.00</td><td>1.80 lower</td></tr>
                     <tr><td>Audio-text CLAP ↑</td><td>0.001</td><td>0.124</td><td>+0.123</td></tr>
                     <tr><td>DNSMOS ↑</td><td>2.33</td><td>2.63</td><td>+0.30</td></tr>
                   </tbody>
@@ -536,10 +537,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.20</td><td>2.00</td><td>+1.80</td></tr>
+                    <tr><td>DeSync ↓</td><td>1.80</td><td>0.00</td><td>1.80 lower</td></tr>
                     <tr><td>Video AS ↑</td><td>0.334</td><td>0.458</td><td>+0.125</td></tr>
                     <tr><td>Audio-text CLAP ↑</td><td>0.062</td><td>0.320</td><td>+0.258</td></tr>
                     <tr><td>DNSMOS ↑</td><td>2.20</td><td>2.64</td><td>+0.44</td></tr>
@@ -576,10 +577,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.10</td><td>1.90</td><td>+1.80</td></tr>
+                    <tr><td>DeSync ↓</td><td>1.90</td><td>0.10</td><td>1.80 lower</td></tr>
                     <tr><td>Video AS ↑</td><td>0.493</td><td>0.517</td><td>+0.024</td></tr>
                     <tr><td>Audio-text CLAP ↑</td><td>0.263</td><td>0.294</td><td>+0.032</td></tr>
                     <tr><td>DNSMOS ↑</td><td>3.83</td><td>4.00</td><td>+0.18</td></tr>
@@ -611,10 +612,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.60</td><td>1.90</td><td>+1.30</td></tr>
+                    <tr><td>DeSync ↓</td><td>1.40</td><td>0.10</td><td>1.30 lower</td></tr>
                     <tr><td>Video AS ↑</td><td>0.341</td><td>0.364</td><td>+0.023</td></tr>
                     <tr><td>Audio-text CLAP ↑</td><td>0.308</td><td>0.344</td><td>+0.036</td></tr>
                     <tr><td>DNSMOS ↑</td><td>3.71</td><td>3.85</td><td>+0.14</td></tr>
@@ -646,10 +647,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.50</td><td>1.90</td><td>+1.40</td></tr>
+                    <tr><td>DeSync ↓</td><td>1.50</td><td>0.10</td><td>1.40 lower</td></tr>
                     <tr><td>Audio-text CLAP ↑</td><td>0.359</td><td>0.367</td><td>+0.007</td></tr>
                     <tr><td>DNSMOS ↑</td><td>3.12</td><td>3.59</td><td>+0.47</td></tr>
                     <tr><td>Audio FD ↓</td><td>1.132</td><td>1.013</td><td>0.120 lower</td></tr>
@@ -686,10 +687,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.00</td><td>1.90</td><td>+1.90</td></tr>
+                    <tr><td>DeSync ↓</td><td>2.00</td><td>0.10</td><td>1.90 lower</td></tr>
                     <tr><td>Video AS ↑</td><td>0.384</td><td>0.433</td><td>+0.050</td></tr>
                     <tr><td>Audio-text CLAP ↑</td><td>0.232</td><td>0.271</td><td>+0.039</td></tr>
                     <tr><td>DNSMOS ↑</td><td>3.65</td><td>3.75</td><td>+0.09</td></tr>
@@ -721,10 +722,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.90</td><td>2.00</td><td>+1.10</td></tr>
+                    <tr><td>DeSync ↓</td><td>1.10</td><td>0.00</td><td>1.10 lower</td></tr>
                     <tr><td>LSE-C ↑</td><td>0.51</td><td>2.04</td><td>+1.53</td></tr>
                     <tr><td>Video AS ↑</td><td>0.386</td><td>0.440</td><td>+0.054</td></tr>
                     <tr><td>Audio-text CLAP ↑</td><td>0.166</td><td>0.186</td><td>+0.020</td></tr>
@@ -756,10 +757,10 @@
                 </div>
                 <table class="case-table">
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Change</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.90</td><td>2.00</td><td>+1.10</td></tr>
+                    <tr><td>DeSync ↓</td><td>1.10</td><td>0.00</td><td>1.10 lower</td></tr>
                     <tr><td>LSE-C ↑</td><td>1.35</td><td>2.79</td><td>+1.45</td></tr>
                     <tr><td>DNSMOS ↑</td><td>3.42</td><td>3.58</td><td>+0.16</td></tr>
                     <tr><td>Speech WER ↓</td><td>0.087</td><td>0.000</td><td>0.087 lower</td></tr>
