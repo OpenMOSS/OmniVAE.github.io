@@ -1,8 +1,9 @@
 # OmniVAE Project Page
 
-Static GitHub Pages site for the OmniVAE project.
+Static GitHub Pages site for **OmniVAE: An Audio-Video VAE with Cross-Modal
+Alignment for Joint Generation**.
 
-- Project page: <https://junzhan2000.github.io/OmniVAE.github.io/>
+- Project page: <https://openmoss.github.io/OmniVAE.github.io/>
 - Code: <https://github.com/OpenMOSS/OmniVAE>
 - Models and evaluation assets: <https://huggingface.co/OpenMOSS-Team/OmniVAE>
 

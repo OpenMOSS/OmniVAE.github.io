@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>OmniVAE: Cross-Modal Aligned VAE for Joint Audio-Video Generation</title>
+    <title>OmniVAE: An Audio-Video VAE with Cross-Modal Alignment for Joint Generation</title>
     <meta
       name="description"
-      content="OmniVAE aligns audio and video VAE latent spaces with segment-level contrastive learning and semantic distillation for text-to-audio-video generation."
+      content="OmniVAE jointly trains audio and video VAEs with segment-level contrastive alignment and modality-specific semantic distillation for joint generation."
     />
     <meta property="og:title" content="OmniVAE" />
     <meta
       property="og:description"
-      content="A cross-modal aligned audio-video VAE for synchronized, semantically coherent T2AV generation."
+      content="An Audio-Video VAE with Cross-Modal Alignment for Joint Generation."
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/images/omnivae-architecture.png" />
@@ -24,687 +24,444 @@
         <nav>
           <a href="#abstract">Abstract</a>
           <a href="#method">Method</a>
-          <a href="#examples">Demos</a>
-          <a href="#cases">Comparisons</a>
           <a href="#results">Results</a>
           <a href="#resources">Resources</a>
+          <a href="#citation">Citation</a>
         </nav>
       </div>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <div class="container hero-inner">
-          <div class="hero-copy">
-            <p class="eyebrow">Research Project</p>
-            <h1 id="hero-title">
-              <span>OmniVAE</span>: Cross-Modal Aligned VAE for Joint
-              Audio-Video Generation
-            </h1>
-            <p class="subtitle">
-              A joint audio-video VAE that keeps separate audio and video codecs,
-              while aligning their latent spaces through segment-level contrastive
-              learning and semantic distillation.
-            </p>
-            <div class="actions" aria-label="Project links">
-              <a class="button primary" href="https://github.com/OpenMOSS/OmniVAE">Code</a>
-              <a class="button" href="https://huggingface.co/OpenMOSS-Team/OmniVAE">Models</a>
-              <span class="button disabled" aria-disabled="true">Paper coming soon</span>
-            </div>
+        <div class="container hero-content">
+          <p class="venue">Research Project</p>
+          <h1 id="hero-title">
+            <span>OmniVAE</span>: An Audio-Video VAE with Cross-Modal Alignment
+            for Joint Generation
+          </h1>
+
+          <div class="authors" aria-label="Authors">
+            <span>Jun Zhan<sup>1,2,3,*,‡</sup></span>
+            <span>Chen Yang<sup>1,2,3,*</sup></span>
+            <span>Yitian Gong<sup>1,3,*</sup></span>
+            <span>Donghua Yu<sup>1,3</sup></span>
+            <span>Kuangwei Chen<sup>1,3</sup></span>
+            <span>Wenbo Zhang<sup>1,3</sup></span>
+            <span>Kexin Huang<sup>1,3</sup></span>
+            <span>Qi Luo<sup>1,3</sup></span>
+            <span>Zhe Xu<sup>1,3</sup></span>
+            <span>Ying Zhu<sup>3,4</sup></span>
+            <span>Jin Wang<sup>1,3</sup></span>
+            <span>Tengyue Zhang<sup>2,4</sup></span>
+            <span>Qi Chen<sup>2,4</sup></span>
+            <span>Cheng Chang<sup>1,3</sup></span>
+            <span>Songlin Wang<sup>3</sup></span>
+            <span>Junqi Dai<sup>1</sup></span>
+            <span>Jiasheng Ye<sup>1</sup></span>
+            <span>Xiaogui Yang<sup>3</sup></span>
+            <span>Tianyi Liang<sup>2,3</sup></span>
+            <span>Xiangyu Peng<sup>3</sup></span>
+            <span>Zhaoye Fei<sup>1,2,3</sup></span>
+            <span>Shimin Li<sup>1,3</sup></span>
+            <span>Qinyuan Cheng<sup>1,3</sup></span>
+            <span>Xie Chen<sup>2,4</sup></span>
+            <span>Xinchi Chen<sup>1</sup></span>
+            <span>Xipeng Qiu<sup>1,2,3,†</sup></span>
           </div>
 
-          <figure class="teaser">
-            <div class="teaser-grid">
-              <video autoplay muted loop playsinline poster="assets/videos/speech-stage.jpg">
-                <source src="assets/videos/speech-stage.mp4" type="video/mp4" />
-              </video>
-              <video autoplay muted loop playsinline poster="assets/videos/talk-closeup.jpg">
-                <source src="assets/videos/talk-closeup.mp4" type="video/mp4" />
-              </video>
-              <video autoplay muted loop playsinline poster="assets/videos/lecture-closeup.jpg">
-                <source src="assets/videos/lecture-closeup.mp4" type="video/mp4" />
-              </video>
-            </div>
-            <figcaption>
-              Jointly generated video and audio examples. Use the detailed demos
-              below to play them with sound.
-            </figcaption>
-          </figure>
+          <div class="affiliations">
+            <span><sup>1</sup>Fudan University</span>
+            <span><sup>2</sup>Shanghai Innovation Institute</span>
+            <span><sup>3</sup>MOSI Intelligence</span>
+            <span><sup>4</sup>Shanghai Jiao Tong University</span>
+          </div>
+          <p class="author-notes">
+            <sup>*</sup>Equal contribution &nbsp; <sup>‡</sup>Project lead &nbsp;
+            <sup>†</sup>Corresponding author
+          </p>
+
+          <div class="actions" aria-label="Project links">
+            <a class="button primary" href="assets/paper/OmniVAE.pdf">Paper</a>
+            <a class="button" href="https://github.com/OpenMOSS/OmniVAE">Code</a>
+            <a class="button" href="https://huggingface.co/OpenMOSS-Team/OmniVAE">Models</a>
+          </div>
         </div>
       </section>
 
-      <section class="summary band">
+      <section class="summary-band" aria-label="Key results">
         <div class="container summary-grid">
           <article>
-            <span class="metric">1.08B</span>
-            <p>inference VAE parameters across video and audio branches.</p>
+            <strong>1.08B</strong>
+            <span>VAE parameters retained at inference</span>
           </article>
           <article>
-            <span class="metric">+14.8</span>
-            <p>A@1 sync probing gain over reconstruction-only latents.</p>
+            <strong>+13.8</strong>
+            <span>A@1 gain in frozen sync probing</span>
           </article>
           <article>
-            <span class="metric">2.89</span>
-            <p>LSE-C lip-sync score for the full T2AV model on Verse-Bench Set3.</p>
+            <strong>0.570</strong>
+            <span>DeSync on Verse-Bench, lower is better</span>
           </article>
           <article>
-            <span class="metric">0</span>
-            <p>extra inference overhead from the alignment and distillation heads.</p>
+            <strong>2.093</strong>
+            <span>LSE-C on face-detectable Set3 samples</span>
           </article>
         </div>
       </section>
 
-      <section id="abstract" class="section abstract-section">
-        <div class="container narrow">
+      <section id="abstract" class="section">
+        <div class="container reading-width">
           <div class="section-heading centered">
             <p class="section-label">Abstract</p>
-            <h2>
-              Learning aligned audio-video latents while preserving independent
-              codecs.
-            </h2>
+            <h2>Aligned, semantically structured latents for joint generation</h2>
           </div>
-          <div class="abstract-copy">
+          <div class="abstract-text">
             <p>
-              OmniVAE is a cross-modal tokenizer for joint audio-video generation.
-              It retains mature modality-specific VAE architectures—a 3D causal
-              video VAE and a continuous waveform audio VAE—while learning
-              temporally and semantically aligned latent representations from
-              paired clips.
+              Recent generative models are moving beyond silent video or
+              standalone audio synthesis toward the joint generation of
+              synchronized audio and video. Most existing systems use audio and
+              video VAEs trained separately, leaving the downstream generator to
+              learn cross-modal synchronization from scratch.
             </p>
             <p>
-              Segment-level bidirectional contrastive learning captures temporal
-              correspondence between modalities, and semantic distillation from
-              frozen multimodal encoders improves latent learnability. Both
-              auxiliary components are used only during training, leaving the
-              original VAE interfaces and inference cost unchanged.
+              OmniVAE is a jointly trained audio-video VAE that learns
+              fine-grained semantic alignment between audio and video latent
+              representations. A segment-level audio-video contrastive objective
+              captures temporal-semantic correspondence, while semantic features
+              from pretrained modality-specific encoders are distilled into each
+              branch to improve downstream learnability. Both objectives are
+              training-only and add no inference cost. Experiments show improved
+              latent-space probing, generation quality, and synchronization in
+              downstream text-to-audio-video generation.
             </p>
           </div>
         </div>
       </section>
 
-      <section id="method" class="section">
-        <div class="container two-column">
-          <div>
-            <p class="section-label">Method</p>
-            <h2>Aligned latents without changing the VAE interface.</h2>
-            <p>
-              OmniVAE keeps mature modality-specific VAE architectures: a 3D
-              causal video VAE and a continuous waveform audio VAE. During
-              training, paired audio-video clips provide two additional signals:
-              a segment-level bidirectional InfoNCE loss for temporal
-              correspondence, and semantic distillation from frozen Qwen3-Omni
-              encoders for modality-level learnability.
-            </p>
-            <p>
-              The contrastive head and distillation projectors are training-only.
-              At inference time the audio and video VAEs are standard independent
-              tokenizers, so they can be used jointly for T2AV generation or
-              separately for reconstruction workflows.
-            </p>
-          </div>
-          <div class="method-points">
-            <article>
-              <h3>Audio-Visual Contrastive Learning</h3>
-              <p>
-                Video latents are spatially aggregated into frame tokens, pooled
-                into temporal segments, and contrasted with matched audio
-                segments using hard intra-clip and sibling-clip negatives.
-              </p>
-            </article>
-            <article>
-              <h3>Uni-Modality Semantic Distillation</h3>
-              <p>
-                Lightweight projectors align each VAE latent stream to frozen
-                semantic teacher features, improving downstream generation while
-                preserving reconstruction quality.
-              </p>
-            </article>
-            <article>
-              <h3>Bridged T2AV Generation</h3>
-              <p>
-                Downstream DiT models combine T2V and T2A priors with
-                zero-initialized bidirectional bridge modules for joint video and
-                audio flow matching.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="figure-section band">
+      <section id="method" class="section band">
         <div class="container">
-          <div class="section-heading">
-            <p class="section-label">Architecture</p>
-            <h2>Two independent VAEs, one aligned latent space.</h2>
+          <div class="section-heading centered">
+            <p class="section-label">Method</p>
+            <h2>Separate codecs, explicitly aligned latent spaces</h2>
+            <p>
+              OmniVAE preserves modality-specific reconstruction while making
+              audio and video latents easier to model individually and jointly.
+            </p>
           </div>
-          <figure class="architecture">
-            <img
-              src="assets/images/omnivae-architecture.png"
-              alt="OmniVAE architecture with separate video and audio encoders, reconstruction paths, contrastive learning, and semantic distillation."
-            />
+
+          <figure class="paper-figure architecture">
+            <a href="assets/images/omnivae-architecture.png">
+              <img
+                src="assets/images/omnivae-architecture.png"
+                alt="OmniVAE architecture with independent video and audio VAEs, audio-visual contrastive learning, and uni-modality semantic distillation."
+              />
+            </a>
             <figcaption>
-              The alignment and distillation components shape the latent spaces
-              during training, then are removed for inference.
+              <strong>Overview of OmniVAE.</strong> Separate video and audio VAEs
+              retain their standard reconstruction paths. Segment-level
+              audio-visual contrastive learning and uni-modality semantic
+              distillation supervise the latents only during training.
             </figcaption>
           </figure>
+
+          <div class="method-grid">
+            <article>
+              <span class="method-number">01</span>
+              <h3>Modality-specific VAEs</h3>
+              <p>
+                The video branch uses a Wan2.2 VAE backbone with 4× temporal and
+                8× spatial downsampling. The audio branch uses a DAC-style
+                continuous VAE for 48 kHz waveforms. Their encoders and decoders
+                remain independent and can be deployed jointly or separately.
+              </p>
+            </article>
+            <article>
+              <span class="method-number">02</span>
+              <h3>Segment-level audio-video alignment</h3>
+              <p>
+                Eight-second clips are divided into 48 aligned temporal
+                segments. A bidirectional InfoNCE loss contrasts each positive
+                pair against intra-clip, sibling-clip, and cross-video negatives,
+                embedding fine-grained temporal correspondence in both latents.
+              </p>
+            </article>
+            <article>
+              <span class="method-number">03</span>
+              <h3>Modality-specific semantic distillation</h3>
+              <p>
+                Frozen Qwen3-Omni vision and audio encoders provide semantic
+                supervision. Lightweight projectors align VAE latents to teacher
+                features with a sigmoid-cosine objective, improving each latent
+                space without requiring cross-modal input.
+              </p>
+            </article>
+            <article>
+              <span class="method-number">04</span>
+              <h3>Training and downstream generation</h3>
+              <p>
+                Training progresses from independent reconstruction pretraining
+                to joint alignment and distillation, followed by audio-decoder
+                refinement. A frozen OmniVAE then tokenizes data for a bridged
+                audio-video flow-matching model used to evaluate joint generation.
+              </p>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section id="examples" class="section examples">
+      <section id="results" class="section results-section">
         <div class="container">
-          <div class="section-heading">
-            <p class="section-label">Examples</p>
-            <h2>Text-to-audio-video samples from the released T2AV model.</h2>
-          </div>
-          <div class="video-grid">
-            <article class="sample">
-              <video controls preload="metadata" poster="assets/videos/speech-stage.jpg">
-                <source src="assets/videos/speech-stage.mp4" type="video/mp4" />
-              </video>
-              <h3>Public Speaking</h3>
-              <p>
-                A medium close-up of a speaker on a stage, delivering a measured
-                line before a quiet auditorium.
-              </p>
-            </article>
-            <article class="sample">
-              <video controls preload="metadata" poster="assets/videos/talk-closeup.jpg">
-                <source src="assets/videos/talk-closeup.mp4" type="video/mp4" />
-              </video>
-              <h3>Small Stage Talk</h3>
-              <p>
-                A close-up speaker clip with animated mouth movement and a
-                clean spoken soundtrack.
-              </p>
-            </article>
-            <article class="sample">
-              <video controls preload="metadata" poster="assets/videos/lecture-closeup.jpg">
-                <source src="assets/videos/lecture-closeup.mp4" type="video/mp4" />
-              </video>
-              <h3>Lecture Close-Up</h3>
-              <p>
-                A formal lecture-style prompt rendered as synchronized speech
-                and face motion.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="cases" class="section band case-studies">
-        <div class="container">
-          <div class="section-heading">
-            <p class="section-label">Case Comparison</p>
-            <h2>Paired T2AV comparisons across Verse-Bench subsets.</h2>
+          <div class="section-heading centered">
+            <p class="section-label">Results</p>
+            <h2>Cross-modal alignment improves downstream joint generation</h2>
             <p>
-              The examples below are selected from Set1, Set2, and Set3-medium;
-              Set3-large samples are intentionally excluded. Each row compares
-              the same prompt generated with the reconstruction-only VAE and
-              with the aligned Recon + Distill + AVCLIP VAE. Sync score, AS,
-              LSE-C, CLAP, DNSMOS, and PQ are higher is better.
+              Results below reproduce the paper's T2AV generation, reconstruction,
+              and audio-video sync probing evaluations.
             </p>
           </div>
 
-          <div class="case-list">
-            <div class="case-group">
-              <h3>Set1</h3>
-              <p>Non-talking or non-speech-leaning samples with strong synchronization gains.</p>
+          <section class="result-block featured-result" aria-labelledby="t2av-title">
+            <div class="result-heading">
+              <p class="result-index">01 · Text-to-Audio-Video Generation</p>
+              <h3 id="t2av-title">Verse-Bench T2AV evaluation</h3>
+              <p>
+                Models trained with AVCLIP consistently improve temporal and
+                semantic alignment. Combining AVCLIP with semantic distillation
+                gives the strongest overall audio performance and cross-modal
+                alignment.
+              </p>
             </div>
 
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set1 / 0073</span>
-                <h3>"The orioles are singing on the island in the river. A beautiful lady is the ideal match for the gentleman."</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set1-0073-recon.jpg">
-                      <source src="assets/videos/cases/set1-0073-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set1-0073-omnivae.jpg">
-                      <source src="assets/videos/cases/set1-0073-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
-                </div>
-                <table class="case-table">
-                  <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Sync score ↑</td><td>0.10</td><td>2.00</td><td>+1.90</td></tr>
-                    <tr><td>Video AS ↑</td><td>0.490</td><td>0.525</td><td>+0.035</td></tr>
-                    <tr><td>DNSMOS ↑</td><td>3.60</td><td>3.91</td><td>+0.31</td></tr>
-                    <tr><td>Speech WER ↓</td><td>0.150</td><td>0.100</td><td>0.050 lower</td></tr>
-                    <tr><td>Audio PQ ↑</td><td>7.17</td><td>7.22</td><td>+0.05</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </article>
+            <figure class="paper-figure curve-figure">
+              <a href="assets/images/all.pdf">
+                <img
+                  src="assets/images/t2av-training-curves.png"
+                  alt="Sixteen T2AV evaluation curves comparing Recon, Recon plus Distill, Recon plus AVCLIP, and OmniVAE across training steps."
+                />
+              </a>
+              <figcaption>
+                <strong>Figure 2.</strong> T2AV metrics across training steps.
+                Rows show cross-modal alignment, video quality, audio quality,
+                and AudioBox aesthetics. Click the figure to open the original
+                <code>all.pdf</code>.
+              </figcaption>
+            </figure>
 
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set1 / 0109 · music</span>
-                <h3>Intimate piano performance in a small studio.</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set1-0109-recon.jpg">
-                      <source src="assets/videos/cases/set1-0109-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set1-0109-omnivae.jpg">
-                      <source src="assets/videos/cases/set1-0109-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
+            <div class="table-grid t2av-tables">
+              <article class="table-panel">
+                <h4>Cross-Modal Alignment</h4>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr><th>Configuration</th><th>DeSync ↓</th><th>LSE-C ↑</th><th>V-A Sim ↑</th><th>T-A Sim ↑</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Recon</td><td>0.884</td><td>1.479</td><td>0.254</td><td>0.201</td></tr>
+                      <tr><td>Recon + Distill</td><td>0.814</td><td>1.450</td><td>0.256</td><td>0.227</td></tr>
+                      <tr><td>Recon + AVCLIP</td><td>0.576</td><td>1.970</td><td>0.257</td><td>0.225</td></tr>
+                      <tr class="best"><td>OmniVAE</td><td>0.570</td><td>2.093</td><td>0.274</td><td>0.246</td></tr>
+                    </tbody>
+                  </table>
                 </div>
-                <table class="case-table">
-                  <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Sync score ↑</td><td>0.20</td><td>2.00</td><td>+1.80</td></tr>
-                    <tr><td>Audio-text CLAP ↑</td><td>0.001</td><td>0.124</td><td>+0.123</td></tr>
-                    <tr><td>DNSMOS ↑</td><td>2.33</td><td>2.63</td><td>+0.30</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </article>
+              </article>
 
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set1 / 0219 · cooking</span>
-                <h3>Close-up culinary plating with tactile kitchen sounds.</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set1-0219-recon.jpg">
-                      <source src="assets/videos/cases/set1-0219-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set1-0219-omnivae.jpg">
-                      <source src="assets/videos/cases/set1-0219-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
+              <article class="table-panel">
+                <h4>Video Quality</h4>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr><th>Configuration</th><th>Aesthetic ↑</th><th>MusiQ ↑</th><th>ManiQA ↑</th><th>Motion ↑</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Recon</td><td>0.369</td><td>0.503</td><td>0.338</td><td class="metric-best">0.556</td></tr>
+                      <tr><td>Recon + Distill</td><td>0.373</td><td class="metric-best">0.523</td><td class="metric-best">0.359</td><td>0.495</td></tr>
+                      <tr><td>Recon + AVCLIP</td><td class="metric-best">0.382</td><td>0.503</td><td>0.341</td><td>0.533</td></tr>
+                      <tr class="ours"><td>OmniVAE</td><td>0.381</td><td>0.515</td><td>0.355</td><td>0.456</td></tr>
+                    </tbody>
+                  </table>
                 </div>
-                <table class="case-table">
-                  <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Sync score ↑</td><td>0.20</td><td>2.00</td><td>+1.80</td></tr>
-                    <tr><td>Video AS ↑</td><td>0.334</td><td>0.458</td><td>+0.125</td></tr>
-                    <tr><td>Audio-text CLAP ↑</td><td>0.062</td><td>0.320</td><td>+0.258</td></tr>
-                    <tr><td>DNSMOS ↑</td><td>2.20</td><td>2.64</td><td>+0.44</td></tr>
-                    <tr><td>PE-TAV ↑</td><td>2.70</td><td>3.44</td><td>+0.74</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </article>
+              </article>
 
-            <div class="case-group">
-              <h3>Set2</h3>
-              <p>Longer spoken prompts where aligned latents improve synchronization and audio fidelity.</p>
+              <article class="table-panel">
+                <h4>Audio Quality</h4>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr><th>Configuration</th><th>IS ↑</th><th>KL ↓</th><th>FD ↓</th><th>WER ↓</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Recon</td><td>3.041</td><td>1.279</td><td>1.029</td><td>0.243</td></tr>
+                      <tr><td>Recon + Distill</td><td>3.604</td><td>1.258</td><td>0.959</td><td>0.205</td></tr>
+                      <tr><td>Recon + AVCLIP</td><td>3.598</td><td>1.231</td><td>0.932</td><td>0.172</td></tr>
+                      <tr class="best"><td>OmniVAE</td><td>4.001</td><td>1.140</td><td>0.875</td><td>0.168</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+
+              <article class="table-panel">
+                <h4>AudioBox Aesthetics</h4>
+                <div class="table-scroll">
+                  <table>
+                    <thead>
+                      <tr><th>Configuration</th><th>CE ↑</th><th>CU ↑</th><th>PC ↓</th><th>PQ ↑</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Recon</td><td>4.625</td><td>5.855</td><td>2.282</td><td>6.328</td></tr>
+                      <tr><td>Recon + Distill</td><td>4.533</td><td>5.677</td><td class="metric-best">2.232</td><td>6.060</td></tr>
+                      <tr><td>Recon + AVCLIP</td><td>4.666</td><td>5.894</td><td>2.237</td><td>6.219</td></tr>
+                      <tr class="ours"><td>OmniVAE</td><td class="metric-best">4.826</td><td class="metric-best">6.119</td><td>2.259</td><td class="metric-best">6.406</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+            <p class="table-note">
+              <strong>Table 4.</strong> Mean over checkpoints 180k, 190k, and
+              200k with CFG = 5. LSE-C is evaluated on face-detectable Set3
+              samples. CE, CU, PC, and PQ denote Content Enjoyment, Content
+              Usefulness, Production Complexity, and Production Quality.
+            </p>
+          </section>
+
+          <section class="result-block" aria-labelledby="recon-title">
+            <div class="result-heading">
+              <p class="result-index">02 · Reconstruction</p>
+              <h3 id="recon-title">Reconstruction quality is largely preserved</h3>
+              <p>
+                Alignment and semantic objectives keep video reconstruction close
+                to the reconstruction-only baseline. OmniVAE also remains
+                competitive across speech, general audio, and music benchmarks.
+              </p>
             </div>
 
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set2 / 10000344</span>
-                <h3>"Long time ago, every year when I watch Oscar with my..."</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set2-10000344-recon.jpg">
-                      <source src="assets/videos/cases/set2-10000344-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set2-10000344-omnivae.jpg">
-                      <source src="assets/videos/cases/set2-10000344-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
-                </div>
-                <table class="case-table">
+            <article class="table-panel full-width">
+              <h4>Video Reconstruction · UCF-101 / Panda-70M</h4>
+              <div class="table-scroll">
+                <table>
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Configuration</th><th>PSNR ↑</th><th>SSIM ↑</th><th>LPIPS ↓</th><th>L1 ↓</th><th>rFVD ↓</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.10</td><td>1.90</td><td>+1.80</td></tr>
-                    <tr><td>Video AS ↑</td><td>0.493</td><td>0.517</td><td>+0.024</td></tr>
-                    <tr><td>Audio-text CLAP ↑</td><td>0.263</td><td>0.294</td><td>+0.032</td></tr>
-                    <tr><td>DNSMOS ↑</td><td>3.83</td><td>4.00</td><td>+0.18</td></tr>
-                    <tr><td>Audio FD ↓</td><td>0.749</td><td>0.498</td><td>0.252 lower</td></tr>
+                    <tr class="group-row"><td colspan="6">External VAEs</td></tr>
+                    <tr><td>Wan2.1 VAE</td><td>34.50 / 32.62</td><td>0.9510 / 0.9448</td><td>0.0201 / 0.0169</td><td>0.0117 / 0.0130</td><td>2.46 / 1.49</td></tr>
+                    <tr><td>Wan2.2 VAE</td><td>34.87 / 33.21</td><td>0.9584 / 0.9541</td><td>0.0177 / 0.0137</td><td>0.0110 / 0.0120</td><td>3.72 / 1.38</td></tr>
+                    <tr class="group-row"><td colspan="6">Ours</td></tr>
+                    <tr><td>Recon</td><td>36.93 / 36.56</td><td>0.9656 / 0.9697</td><td>0.0102 / 0.0067</td><td>0.0090 / 0.0086</td><td>2.40 / 1.25</td></tr>
+                    <tr><td>Recon + Distill</td><td>36.70 / 36.22</td><td>0.9649 / 0.9688</td><td>0.0107 / 0.0071</td><td>0.0092 / 0.0089</td><td>2.53 / 1.26</td></tr>
+                    <tr><td>Recon + AVCLIP</td><td>36.22 / 35.13</td><td>0.9616 / 0.9631</td><td>0.0115 / 0.0079</td><td>0.0097 / 0.0098</td><td>2.66 / 1.35</td></tr>
+                    <tr class="ours"><td>OmniVAE</td><td>36.27 / 35.24</td><td>0.9616 / 0.9632</td><td>0.0113 / 0.0077</td><td>0.0097 / 0.0098</td><td>2.81 / 1.31</td></tr>
                   </tbody>
                 </table>
               </div>
             </article>
 
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set2 / 10000292</span>
-                <h3>"It was great. I have great relationships with Mexico, with the Mexican people."</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set2-10000292-recon.jpg">
-                      <source src="assets/videos/cases/set2-10000292-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set2-10000292-omnivae.jpg">
-                      <source src="assets/videos/cases/set2-10000292-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
-                </div>
-                <table class="case-table">
+            <article class="table-panel full-width">
+              <h4>Audio Reconstruction · Speech and Audio / Music</h4>
+              <div class="table-scroll">
+                <table>
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Model</th><th>SIM ↑</th><th>STOI ↑</th><th>P-NB ↑</th><th>P-WB ↑</th><th>Mel ↓</th><th>STFT ↓</th><th>ViSQOL ↑</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.60</td><td>1.90</td><td>+1.30</td></tr>
-                    <tr><td>Video AS ↑</td><td>0.341</td><td>0.364</td><td>+0.023</td></tr>
-                    <tr><td>Audio-text CLAP ↑</td><td>0.308</td><td>0.344</td><td>+0.036</td></tr>
-                    <tr><td>DNSMOS ↑</td><td>3.71</td><td>3.85</td><td>+0.14</td></tr>
-                    <tr><td>Speech WER ↓</td><td>0.077</td><td>0.000</td><td>0.077 lower</td></tr>
+                    <tr class="group-row"><td colspan="8">External VAEs</td></tr>
+                    <tr><td>HunyuanVideo-Foley VAE</td><td>0.9899</td><td>0.9979</td><td>4.4780</td><td>4.5337</td><td>0.52 / 0.60</td><td>1.82 / 1.84</td><td>4.47 / 4.45</td></tr>
+                    <tr><td>MMAudio VAE</td><td>0.9122</td><td>0.9502</td><td>3.4931</td><td>2.9797</td><td>1.23 / 1.36</td><td>2.14 / 2.44</td><td>4.42 / 4.42</td></tr>
+                    <tr><td>Stable Audio 3 SAME-S</td><td>0.7960</td><td>0.9139</td><td>2.8073</td><td>2.2991</td><td>1.46 / 1.37</td><td>3.19 / 3.67</td><td>3.68 / 3.99</td></tr>
+                    <tr><td>Stable Audio 3 SAME-L</td><td>0.8755</td><td>0.9539</td><td>3.4615</td><td>3.0739</td><td>1.37 / 1.22</td><td>3.30 / 3.55</td><td>3.76 / 4.17</td></tr>
+                    <tr class="group-row"><td colspan="8">Ours</td></tr>
+                    <tr><td>Recon</td><td>0.9893</td><td>0.9981</td><td>4.4916</td><td>4.5557</td><td>0.44 / 0.50</td><td>1.75 / 1.72</td><td>4.55 / 4.60</td></tr>
+                    <tr><td>Recon + Distill</td><td>0.9893</td><td>0.9970</td><td>4.4453</td><td>4.5101</td><td>0.56 / 0.64</td><td>1.96 / 1.95</td><td>4.44 / 4.42</td></tr>
+                    <tr><td>Recon + AVCLIP</td><td>0.9666</td><td>0.9946</td><td>4.4346</td><td>4.3638</td><td>0.76 / 0.75</td><td>1.99 / 2.03</td><td>4.03 / 4.18</td></tr>
+                    <tr class="ours"><td>OmniVAE</td><td>0.9737</td><td>0.9948</td><td>4.4400</td><td>4.4085</td><td>0.74 / 0.73</td><td>2.02 / 2.08</td><td>4.08 / 4.31</td></tr>
                   </tbody>
                 </table>
               </div>
             </article>
+            <p class="table-note">
+              <strong>Table 2.</strong> Video values are UCF-101 / Panda-70M;
+              Audio / Music values are AudioSet / MUSDB18. Speech metrics use
+              LibriSpeech test-clean.
+            </p>
+          </section>
 
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set2 / 10000519</span>
-                <h3>Formal conference presentation with a single speaker.</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set2-10000519-recon.jpg">
-                      <source src="assets/videos/cases/set2-10000519-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set2-10000519-omnivae.jpg">
-                      <source src="assets/videos/cases/set2-10000519-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
-                </div>
-                <table class="case-table">
-                  <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Sync score ↑</td><td>0.50</td><td>1.90</td><td>+1.40</td></tr>
-                    <tr><td>Audio-text CLAP ↑</td><td>0.359</td><td>0.367</td><td>+0.007</td></tr>
-                    <tr><td>DNSMOS ↑</td><td>3.12</td><td>3.59</td><td>+0.47</td></tr>
-                    <tr><td>Audio FD ↓</td><td>1.132</td><td>1.013</td><td>0.120 lower</td></tr>
-                    <tr><td>Audio PQ ↑</td><td>5.81</td><td>6.72</td><td>+0.91</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </article>
-
-            <div class="case-group">
-              <h3>Set3-medium</h3>
-              <p>Face-centric samples with valid lip-sync evaluation and high audio quality.</p>
+          <section class="result-block" aria-labelledby="probe-title">
+            <div class="result-heading">
+              <p class="result-index">03 · Audio-Video Sync Probing</p>
+              <h3 id="probe-title">Contrastive learning drives temporal alignment</h3>
+              <p>
+                A lightweight probe predicts one of 21 audio offsets from −2 to
+                +2 seconds on VGGSound-Sparse. OmniVAE performs best with frozen
+                representations and when the contrastive aggregators are
+                fine-tuned.
+              </p>
             </div>
 
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set3-medium / 1006</span>
-                <h3>"Wouldn't it be great if there was a way to meet that demand by simply wasting less of what we're already mining?"</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set3m-1006-recon.jpg">
-                      <source src="assets/videos/cases/set3m-1006-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set3m-1006-omnivae.jpg">
-                      <source src="assets/videos/cases/set3m-1006-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
-                </div>
-                <table class="case-table">
+            <article class="table-panel probe-table">
+              <div class="table-scroll">
+                <table>
                   <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
+                    <tr><th>Protocol</th><th>Method</th><th>A@1</th><th>A@5</th><th>A@1<sub>tol</sub></th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>Sync score ↑</td><td>0.00</td><td>1.90</td><td>+1.90</td></tr>
-                    <tr><td>Video AS ↑</td><td>0.384</td><td>0.433</td><td>+0.050</td></tr>
-                    <tr><td>Audio-text CLAP ↑</td><td>0.232</td><td>0.271</td><td>+0.039</td></tr>
-                    <tr><td>DNSMOS ↑</td><td>3.65</td><td>3.75</td><td>+0.09</td></tr>
-                    <tr><td>Audio PQ ↑</td><td>6.42</td><td>7.02</td><td>+0.60</td></tr>
+                    <tr><td rowspan="4">Frozen</td><td>Recon</td><td>6.4</td><td>31.5</td><td>16.2</td></tr>
+                    <tr><td>Recon + Distill</td><td>7.1</td><td>33.0</td><td>17.5</td></tr>
+                    <tr><td>Recon + AVCLIP</td><td>18.1</td><td>47.8</td><td>34.5</td></tr>
+                    <tr class="best"><td>OmniVAE</td><td>20.2</td><td>50.1</td><td>37.2</td></tr>
+                    <tr><td rowspan="4">+ft</td><td>Recon + ft</td><td>7.0</td><td>32.4</td><td>17.1</td></tr>
+                    <tr><td>Recon + Distill + ft</td><td>7.8</td><td>33.9</td><td>18.4</td></tr>
+                    <tr><td>Recon + AVCLIP + ft</td><td>21.8</td><td>52.4</td><td>39.6</td></tr>
+                    <tr class="best"><td>OmniVAE + ft</td><td>22.3</td><td>53.2</td><td>40.4</td></tr>
                   </tbody>
                 </table>
               </div>
             </article>
-
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set3-medium / 1032</span>
-                <h3>"So in order to understand how to actually achieve this, we have to look at cement in a little bit more detail."</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set3m-1032-recon.jpg">
-                      <source src="assets/videos/cases/set3m-1032-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set3m-1032-omnivae.jpg">
-                      <source src="assets/videos/cases/set3m-1032-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
-                </div>
-                <table class="case-table">
-                  <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Sync score ↑</td><td>0.90</td><td>2.00</td><td>+1.10</td></tr>
-                    <tr><td>LSE-C ↑</td><td>0.51</td><td>2.04</td><td>+1.53</td></tr>
-                    <tr><td>Video AS ↑</td><td>0.386</td><td>0.440</td><td>+0.054</td></tr>
-                    <tr><td>Audio-text CLAP ↑</td><td>0.166</td><td>0.186</td><td>+0.020</td></tr>
-                    <tr><td>PE-TAV ↑</td><td>3.53</td><td>3.60</td><td>+0.07</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </article>
-
-            <article class="case-card">
-              <div class="case-header">
-                <span>Set3-medium / 1045</span>
-                <h3>"But in reality, I started it because I was traumatized, and I didn't want anyone to go through what I had been through."</h3>
-              </div>
-              <div class="case-body">
-                <div class="case-videos">
-                  <figure>
-                    <video controls preload="metadata" poster="assets/videos/cases/set3m-1045-recon.jpg">
-                      <source src="assets/videos/cases/set3m-1045-recon.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon</figcaption>
-                  </figure>
-                  <figure class="case-best">
-                    <video controls preload="metadata" poster="assets/videos/cases/set3m-1045-omnivae.jpg">
-                      <source src="assets/videos/cases/set3m-1045-omnivae.mp4" type="video/mp4" />
-                    </video>
-                    <figcaption>Recon + Distill + AVCLIP</figcaption>
-                  </figure>
-                </div>
-                <table class="case-table">
-                  <thead>
-                    <tr><th>Metric</th><th>Recon</th><th>OmniVAE</th><th>Gain</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Sync score ↑</td><td>0.90</td><td>2.00</td><td>+1.10</td></tr>
-                    <tr><td>LSE-C ↑</td><td>1.35</td><td>2.79</td><td>+1.45</td></tr>
-                    <tr><td>DNSMOS ↑</td><td>3.42</td><td>3.58</td><td>+0.16</td></tr>
-                    <tr><td>Speech WER ↓</td><td>0.087</td><td>0.000</td><td>0.087 lower</td></tr>
-                    <tr><td>Audio PQ ↑</td><td>5.12</td><td>6.67</td><td>+1.55</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </article>
-          </div>
+            <p class="table-note">
+              <strong>Table 3.</strong> Sync probing on VGGSound-Sparse (%).
+              A@1<sub>tol</sub> uses ±1-class tolerance; <em>+ft</em> also tunes
+              the contrastive aggregators.
+            </p>
+          </section>
         </div>
       </section>
 
-      <section id="results" class="section band">
-        <div class="container">
-          <div class="section-heading">
-            <p class="section-label">Results</p>
-            <h2>Alignment improves both probing and downstream generation.</h2>
-          </div>
-          <div class="results-grid">
-            <article class="result-panel">
-              <h3>Audio-Video Sync Probing</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Method</th>
-                    <th>A@1</th>
-                    <th>A@5</th>
-                    <th>tol1</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Recon</td>
-                    <td>6.4</td>
-                    <td>31.5</td>
-                    <td>16.2</td>
-                  </tr>
-                  <tr>
-                    <td>Recon + Distill</td>
-                    <td>7.1</td>
-                    <td>33.0</td>
-                    <td>17.5</td>
-                  </tr>
-                  <tr>
-                    <td>Recon + AVCLIP</td>
-                    <td>18.1</td>
-                    <td>47.8</td>
-                    <td>34.5</td>
-                  </tr>
-                  <tr class="best">
-                    <td>OmniVAE</td>
-                    <td>20.2</td>
-                    <td>50.1</td>
-                    <td>37.2</td>
-                  </tr>
-                </tbody>
-              </table>
-            </article>
-            <article class="result-panel">
-              <h3>Verse-Bench T2AV</h3>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Method</th>
-                    <th>FVD</th>
-                    <th>CLAP</th>
-                    <th>LSE-C</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Recon</td>
-                    <td>412.6</td>
-                    <td>0.241</td>
-                    <td>2.18</td>
-                  </tr>
-                  <tr>
-                    <td>Recon + Distill</td>
-                    <td>387.3</td>
-                    <td>0.286</td>
-                    <td>2.34</td>
-                  </tr>
-                  <tr>
-                    <td>Recon + AVCLIP</td>
-                    <td>394.5</td>
-                    <td>0.273</td>
-                    <td>2.71</td>
-                  </tr>
-                  <tr class="best">
-                    <td>OmniVAE</td>
-                    <td>376.8</td>
-                    <td>0.314</td>
-                    <td>2.89</td>
-                  </tr>
-                </tbody>
-              </table>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="resources" class="section resources">
+      <section id="resources" class="section band">
         <div class="container resource-layout">
           <div>
             <p class="section-label">Resources</p>
-            <h2>Code, checkpoints, and release validation scripts.</h2>
+            <h2>Paper, code, and model release</h2>
             <p>
-              The GitHub repository contains VAE, T2AV generation, and sync
-              probing code. The Hugging Face bundle contains release VAE
-              checkpoints, T2AV DiT checkpoints, the text encoder dependency,
-              Verse-Bench manifests, and metric weights.
+              The repository provides OmniVAE training, reconstruction,
+              generation, and evaluation code. Released checkpoints and
+              evaluation assets are hosted on Hugging Face.
             </p>
           </div>
           <div class="resource-list">
+            <a href="assets/paper/OmniVAE.pdf">
+              <span>Paper</span>
+              <strong>OmniVAE PDF</strong>
+            </a>
             <a href="https://github.com/OpenMOSS/OmniVAE">
-              <span>GitHub</span>
+              <span>Code</span>
               <strong>OpenMOSS/OmniVAE</strong>
             </a>
             <a href="https://huggingface.co/OpenMOSS-Team/OmniVAE">
-              <span>Hugging Face</span>
+              <span>Models and evaluation assets</span>
               <strong>OpenMOSS-Team/OmniVAE</strong>
             </a>
-            <div class="resource-disabled" aria-disabled="true">
-              <span>Paper</span>
-              <strong>arXiv coming soon</strong>
-            </div>
           </div>
         </div>
       </section>
 
-      <section class="citation band">
+      <section id="citation" class="section citation-section">
         <div class="container">
           <div class="section-heading">
             <p class="section-label">Citation</p>
-            <h2>Temporary citation entry.</h2>
+            <h2>BibTeX</h2>
           </div>
-          <pre><code>@article{omnivae2026,
-  title   = {OmniVAE: A Cross-Modal Aligned VAE for Joint Audio-Video Generation},
-  author  = {Zhan, Jun and Contributors},
-  journal = {arXiv preprint arXiv:XXXX.XXXXX},
+          <pre><code>@article{zhan2026omnivae,
+  title   = {OmniVAE: An Audio-Video VAE with Cross-Modal Alignment for Joint Generation},
+  author  = {Zhan, Jun and Yang, Chen and Gong, Yitian and Yu, Donghua and Chen, Kuangwei and Zhang, Wenbo and Huang, Kexin and Luo, Qi and Xu, Zhe and Zhu, Ying and Wang, Jin and Zhang, Tengyue and Chen, Qi and Chang, Cheng and Wang, Songlin and Dai, Junqi and Ye, Jiasheng and Yang, Xiaogui and Liang, Tianyi and Peng, Xiangyu and Fei, Zhaoye and Li, Shimin and Cheng, Qinyuan and Chen, Xie and Chen, Xinchi and Qiu, Xipeng},
   year    = {2026},
   url     = {https://github.com/OpenMOSS/OmniVAE}
 }</code></pre>
@@ -715,16 +472,8 @@
     <footer class="site-footer">
       <div class="container footer-inner">
         <span>OmniVAE</span>
-        <span>Apache-2.0 licensed code release.</span>
+        <span>Fudan University · Shanghai Innovation Institute · MOSI Intelligence · Shanghai Jiao Tong University</span>
       </div>
     </footer>
-    <script>
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        document.querySelectorAll("video[autoplay]").forEach((video) => {
-          video.autoplay = false;
-          video.pause();
-        });
-      }
-    </script>
   </body>
 </html>
