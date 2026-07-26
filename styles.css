@@ -230,6 +230,7 @@ nav a {
 .button {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   justify-content: center;
   min-width: 105px;
   min-height: 42px;
@@ -240,6 +241,13 @@ nav a {
   background: #ffffff;
   font-size: 0.91rem;
   font-weight: 660;
+}
+
+.button svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  fill: currentColor;
 }
 
 .button:hover {
@@ -597,7 +605,7 @@ tbody tr:last-child td {
 
 .case-body {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.55fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(460px, 0.95fr);
   gap: 20px;
   align-items: start;
 }
@@ -666,6 +674,24 @@ tbody tr:last-child td {
 .case-table td:last-child {
   color: #116a4d;
   font-weight: 690;
+}
+
+.case-metric-group th {
+  padding: 7px 9px;
+  color: var(--blue-dark);
+  background: #edf4f6;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.case-metric-note {
+  grid-column: 2;
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
 }
 
 .resource-layout {
@@ -760,6 +786,10 @@ code {
   .resource-layout,
   .case-body {
     grid-template-columns: 1fr;
+  }
+
+  .case-metric-note {
+    grid-column: 1;
   }
 
   .resource-layout {
